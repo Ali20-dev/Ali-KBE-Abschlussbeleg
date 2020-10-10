@@ -1,4 +1,4 @@
-# KBE Projekt Template
+# ALIS
 
 ## TODO
 1. Ersetzen Sie die Überschrift mit `TEAMNAME`
