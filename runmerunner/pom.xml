@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>htwb.ai.TEAMNAME</groupId>
+        <groupId>htwb.ai.ALIS</groupId>
     	<artifactId>modules</artifactId>
 		<version>1.0</version>
     </parent>
     
-	<groupId>htwb.ai.TEAMNAME</groupId>
+	<groupId>htwb.ai.ALIS</groupId>
 	<artifactId>runmerunner</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
@@ -21,7 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<build>
-	   	<finalName>runmerunner-TEAMNAME</finalName>
+	   	<finalName>runmerunner-ALIS</finalName>
 		<plugins>
 			
 		</plugins>

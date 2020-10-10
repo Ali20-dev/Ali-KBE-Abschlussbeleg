@@ -6,12 +6,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-        <groupId>htwb.ai.TEAMNAME</groupId>
+        <groupId>htwb.ai.ALIS</groupId>
     	<artifactId>modules</artifactId>
 		<version>1.0</version>
     </parent>
 
-	<groupId>htwb.ai.TEAMNAME</groupId>
+	<groupId>htwb.ai.ALIS</groupId>
 	<artifactId>songsservlet</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
@@ -49,7 +49,7 @@
         </dependency>
 	</dependencies>
 	<build>
-		<finalName>songsservlet-TEAMNAME</finalName>
+		<finalName>songsservlet-ALIS</finalName>
 		<plugins>
 		</plugins>
 	</build>
