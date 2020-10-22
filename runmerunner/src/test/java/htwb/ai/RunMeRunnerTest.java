@@ -74,18 +74,15 @@ class RunMeRunnerTest {
     @Test
     void testWithMeanTestMethodsClass() {
         String result = runMeRunner.analyzeClass("htwb.ai.MeanTestMethods");
-        assertEquals("Analyzed class 'htwb.ai.MeanTestMethods':\n" +
+        assertEquals("\nAnalyzed class 'htwb.ai.MeanTestMethods':\n" +
                 "Methods without @RunMe:\n" +
-                "\ttestNoRM22\n" +
-                "\ttestWithoutRM\n" +
+                "\ttestWithoutRMPrivate\n" +
+                "\ttestWithoutRMPublic\n" +
                 "Methods with @RunMe:\n" +
                 "\tfindMe1\n" +
                 "\tfindMe2\n" +
-                "\tfindMe3\n" +
                 "\tfindMe4\n" +
                 "\tfindMe5\n" +
-                "\tfindMe6\n" +
-                "\tfindMe7\n" +
                 "not invocable:\n" +
                 "\tfindMe3: IllegalAccessException\n" +
                 "\tfindMe6: InvocationTargetException\n" +

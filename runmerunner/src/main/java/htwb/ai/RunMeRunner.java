@@ -72,7 +72,8 @@ public class RunMeRunner {
         }
         stringBuilder.append("Methods with @RunMe:\n");
         for (String method : methodListWithRunMe) {
-            stringBuilder.append("\t").append(method).append("\n");
+            if (!methodsNotInvocable.containsKey(method))
+                stringBuilder.append("\t").append(method).append("\n");
         }
         stringBuilder.append("not invocable:\n");
         methodsNotInvocable.forEach((method, errorMessage) -> {
