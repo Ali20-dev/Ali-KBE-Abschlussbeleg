@@ -65,7 +65,7 @@ public class RunMeRunner {
         methodListWithoutRunMe.sort(String.CASE_INSENSITIVE_ORDER);
         methodListWithRunMe.sort(String.CASE_INSENSITIVE_ORDER);
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Analyzed class '").append(className).append("':\n");
+        stringBuilder.append("\nAnalyzed class '").append(className).append("':\n");
         stringBuilder.append("Methods without @RunMe:\n");
         for (String method : methodListWithoutRunMe) {
             stringBuilder.append("\t").append(method).append("\n");
