@@ -1,4 +1,4 @@
-name: runmerunner clean, build, test & package 
+name: runmerunner clean, build, test & package
 
 on:
   pull_request:
@@ -21,12 +21,12 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
-        java-package: jdk 
-        architecture: x64 
-    - name: runmerunner clean, build, test & package
-      run: mvn -pl runmerunner clean package
+        java-package: jdk
+        architecture: x64
     - name: copy runmerunner test classes
       run: cp ./runmerunner/TestClasses/htwb/*.java ./runmerunner/src/main/java/htwb
+    - name: runmerunner clean, build, test & package
+      run: mvn -pl runmerunner clean package
     - name: Run tests
       run: |
         jarpath=$(ls ./runmerunner/target/runmerunner-*.jar)
