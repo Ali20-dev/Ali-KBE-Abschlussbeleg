@@ -32,6 +32,7 @@ jobs:
         jarpath=$(ls ./runmerunner/target/runmerunner-*.jar)
         jarname=$(basename $jarpath)
         echo $jarname
+        cd runmerunner
         java -jar target/$jarname
         java -jar target/$jarname dieseklassegibtesnicht
         java -jar target/$jarname java.io.Closeable
