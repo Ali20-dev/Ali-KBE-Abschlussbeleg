@@ -11,11 +11,11 @@
             <property name="javax.persistence.jdbc.driver"
                       value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:postgresql://ec2-54-247-79-178.eu-west-1.compute.amazonaws.com:5432/d3ch05jd151n16"/>
+                      value="jdbc:postgresql://ec2-176-34-114-78.eu-west-1.compute.amazonaws.com:5432/da3iok859m80a4"/>
             <property name="javax.persistence.jdbc.user"
-                      value="fkorcvjugmwfrw"/>
+                      value="phdjyzacgohdtt"/>
             <property name="javax.persistence.jdbc.password"
-                      value="0560f9c63570fbb40b802e93c870c1332a9c5291dc25f8b6c1333a535a4b85c3"/>
+                      value="7f40587c208e1bc8340fd74dd476884b5518ecd45dcd06699dc4712dad9893ba"/>
 
             <!--Hibernate properties-->
             <property name="hibernate.show_sql" value="true"/>
