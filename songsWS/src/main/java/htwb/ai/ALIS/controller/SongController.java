@@ -1,63 +1,56 @@
 package htwb.ai.ALIS.controller;
 
 import htwb.ai.ALIS.model.Song;
-import htwb.ai.ALIS.service.SongService;
-import htwb.ai.ALIS.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import htwb.ai.ALIS.repository.DBSongDAO;
+import javassist.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/songs")
 public class SongController {
 
-    @Autowired
-    SongService songService;
+    private DBSongDAO dbSongDAO;
 
-    @Autowired
-    UserService userService;
-
-    public SongController(SongService songService, UserService userService) {
-        this.userService = userService;
-        this.songService = songService;
+    public SongController(DBSongDAO dbSongDAO) {
+        this.dbSongDAO = dbSongDAO;
     }
 
-    @GetMapping(value = "/songs/{id}", produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> getSong(@RequestHeader(value = "Authorization", required = false) String token, @PathVariable int id) {
+    public SongController() {
+
+    }
+
+    @GetMapping(value = "/{id}", produces = {"application/json", "application/xml"})
+    public ResponseEntity<?> getSong(@PathVariable int id) {
         try {
-            Optional<Song> loadedSong = songService.findSong(id);
-            if (loadedSong.isPresent()) {
-                return ResponseEntity.ok(loadedSong.get());
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            return ResponseEntity.ok(dbSongDAO.findSong(id));
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }
 
-
-    @GetMapping(value = "/songs", produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> getAllSongs(@RequestHeader(value = "Authorization", required = false) String token) {
+    @GetMapping(produces = {"application/json", "application/xml"})
+    public ResponseEntity<?> getAllSongs() {
         try {
-            return ResponseEntity.ok(songService.findAllSongs());
+            //return dbSongDAO.findAllSongs();
+            return ResponseEntity.ok(dbSongDAO.findAllSongs());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @PostMapping(value = "/songs", consumes = {"application/json"})
-    public ResponseEntity<?> postSong(@RequestHeader(value = "Authorization", required = false) String token, @Valid @RequestBody Song song) {
+    @PostMapping(consumes = {"application/json"})
+    public ResponseEntity<?> postSong(@Valid @RequestBody Song song) {
         try {
             //save user
-            int newSongID = songService.saveSong(song);
+            int newSongID = dbSongDAO.saveSong(song);
             String newURL = "/rest/songs/" + newSongID;
             URI uri = new URI(newURL);
             //set location header to newly created user
@@ -68,34 +61,31 @@ public class SongController {
         }
     }
 
-    @PutMapping(value = "/songs/{id}", consumes = {"application/json"})
-    public ResponseEntity<?> putSong(@RequestHeader(value = "Authorization", required = false) String token, @Valid @RequestBody Song song, @PathVariable int id) {
+    @PutMapping(value = "/{id}", consumes = {"application/json"})
+    public ResponseEntity<?> putSong(@Valid @RequestBody Song song, @PathVariable int id) {
+        System.out.println(id + ", " + song.getId());
         try {
             if (song.getId() == id) {
-                boolean songFound = songService.overwriteSong(song, id);
-                if (songFound) {
-                    return ResponseEntity.noContent().build();
-                } else {
-                    return ResponseEntity.notFound().build();
-                }
+                dbSongDAO.overwriteSong(song, id);
+                return ResponseEntity.noContent().build();
             } else {
                 return ResponseEntity.badRequest().build();
             }
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @DeleteMapping(value = "/songs/{id}")
-    public ResponseEntity<?> deleteSong(@RequestHeader(value = "Authorization", required = false) String token, @PathVariable int id) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteSong(@PathVariable int id) {
         try {
-            boolean songFound = songService.deleteSong(id);
-            if (songFound) {
-                return ResponseEntity.noContent().build();
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            dbSongDAO.deleteSong(id);
+            return ResponseEntity.noContent().build();
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

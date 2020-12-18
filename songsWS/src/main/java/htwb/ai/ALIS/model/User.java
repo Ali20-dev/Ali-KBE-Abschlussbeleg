@@ -39,12 +39,11 @@ public class User {
     @Length(max = 20)
     private String accessToken;
 
-    public User(@NotNull @Min(3) @Max(50) String userId, @NotNull @Min(3) @Max(50) String password, @NotNull @Min(3) @Max(50) String firstName, @NotNull @Min(3) @Max(50) String lastName, @Length String accessToken) {
+    public User(@NotNull @Min(3) @Max(50) String userId, @NotNull @Min(3) @Max(50) String password, @NotNull @Min(3) @Max(50) String firstName, @NotNull @Min(3) @Max(50) String lastName) {
         this.userId = userId;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.accessToken = accessToken;
     }
 
     public User() {

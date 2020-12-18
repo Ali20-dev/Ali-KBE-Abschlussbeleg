@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="d3ch05jd151n16" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <class>htwb.ai.ALIS.model.Song</class>
+        <class>htwb.ai.ALIS.model.User</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver"
+                      value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:postgresql://ec2-54-247-79-178.eu-west-1.compute.amazonaws.com:5432/d3ch05jd151n16"/>
+            <property name="javax.persistence.jdbc.user"
+                      value="fkorcvjugmwfrw"/>
+            <property name="javax.persistence.jdbc.password"
+                      value="0560f9c63570fbb40b802e93c870c1332a9c5291dc25f8b6c1333a535a4b85c3"/>
+
+            <!--Hibernate properties-->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="false"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+
+            <!-- The connection is released after each statement execution
+                 and reacquired prior to running the next statement.  -->
+            <property name="hibernate.connection.release_mode" value="after_statement"/>
+
+            <!-- Connection pool properties -->
+            <property name="hibernate.c3p0.min_size" value="1"/>
+            <property name="hibernate.c3p0.max_size" value="8"/>
+
+            <!-- in seconds:  When an idle connection is removed from the pool
+                 Hibernate default: 0, never expire. -->
+            <property name="hibernate.c3p0.timeout" value="1800"/>
+
+            <!--  Number of prepared statements that will be cached.
+                  Hibernate default: 0 , caching is disable. -->
+            <property name="hibernate.c3p0.max_statements" value="50"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>

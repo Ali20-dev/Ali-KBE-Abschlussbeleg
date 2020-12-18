@@ -3,14 +3,13 @@ package htwb.ai.ALIS.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import htwb.ai.ALIS.model.User;
 import htwb.ai.ALIS.model.UserBuilder;
-import htwb.ai.ALIS.service.UserService;
-import htwb.ai.ALIS.service.UserServiceImpl;
+import htwb.ai.ALIS.repository.UserDAO;
+import htwb.ai.ALIS.repository.UserDAOImpl;
+import javassist.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -24,14 +23,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(AuthController.class)
+@WebMvcTest
 class AuthControllerTest {
-    @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    private UserService mockedUserService;
-
+    private UserDAO mockedUserDAO;
+    private List<User> listOfUsers;
     private User authenticatedUser, nonAuthenticatedUser, userDoesNotExist;
 
     @BeforeEach
@@ -41,18 +37,21 @@ class AuthControllerTest {
         nonAuthenticatedUser = new UserBuilder().setUserId("mamamia").setPassword("marioboi19").createUser();
         authenticatedUser = new UserBuilder().setUserId("mmuster").setPassword("pass1234").createUser();
         userDoesNotExist = new UserBuilder().setUserId("Noooo").setPassword("ooooo").createUser();
-        mockedUserService = Mockito.mock(UserServiceImpl.class);
-        Mockito.when(mockedUserService.authenticateUser(authenticatedUser.getUserId(), authenticatedUser.getPassword())).thenReturn(true);
-        Mockito.when(mockedUserService.authenticateUser(nonAuthenticatedUser.getUserId(), nonAuthenticatedUser.getPassword())).thenReturn(false);
-        Mockito.when(mockedUserService.authenticateUser(userDoesNotExist.getUserId(), userDoesNotExist.getPassword())).thenReturn(false);
-        mockMvc = MockMvcBuilders.standaloneSetup(new AuthController(mockedUserService)).build();
+        listOfUsers = new ArrayList<>();
+        listOfUsers.add(mmuster);
+        listOfUsers.add(eschuler);
+        mockedUserDAO = Mockito.mock(UserDAOImpl.class);
+        Mockito.when(mockedUserDAO.authenticateUser(authenticatedUser.getUserId(), authenticatedUser.getPassword())).thenReturn(true);
+        Mockito.when(mockedUserDAO.authenticateUser(nonAuthenticatedUser.getUserId(), nonAuthenticatedUser.getPassword())).thenReturn(false);
+        Mockito.when(mockedUserDAO.authenticateUser(userDoesNotExist.getUserId(), userDoesNotExist.getPassword())).thenThrow(NotFoundException.class);
+        mockMvc = MockMvcBuilders.standaloneSetup(new AuthController(mockedUserDAO)).build();
     }
 
     @Test
     public void testAuthenticationWithValidUser() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonUser = objectMapper.writeValueAsString(authenticatedUser);
-        MvcResult result = mockMvc.perform(post("/rest/auth")
+        MvcResult result = mockMvc.perform(post("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonUser))
                 .andExpect(status().isOk())
@@ -63,30 +62,30 @@ class AuthControllerTest {
         result.getResponse().setCharacterEncoding("utf-8");
         System.out.println(result.getResponse().getContentAsString());
         assertTrue(result.getResponse().getContentAsString().matches("^[a-zA-Z0-9]{15}$"));
-        Mockito.verify(mockedUserService, Mockito.times(1)).authenticateUser(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(mockedUserDAO, Mockito.times(1)).authenticateUser(Mockito.anyString(), Mockito.anyString());
     }
 
     @Test
     public void testAuthenticationWithInvalidUser() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonUser = objectMapper.writeValueAsString(nonAuthenticatedUser);
-        mockMvc.perform(post("/rest/auth")
+        mockMvc.perform(post("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonUser))
                 .andExpect(status().isUnauthorized());
 
-        Mockito.verify(mockedUserService, Mockito.times(1)).authenticateUser(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(mockedUserDAO, Mockito.times(1)).authenticateUser(Mockito.anyString(), Mockito.anyString());
     }
 
     @Test
     public void testAuthenticationWithNonExistingUser() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonUser = objectMapper.writeValueAsString(userDoesNotExist);
-        mockMvc.perform(post("/rest/auth")
+        mockMvc.perform(post("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonUser))
                 .andExpect(status().isUnauthorized());
 
-        Mockito.verify(mockedUserService, Mockito.times(1)).authenticateUser(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(mockedUserDAO, Mockito.times(1)).authenticateUser(Mockito.anyString(), Mockito.anyString());
     }
 }
