@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--  explicit support for annotation-driven MVC controllers
+         e.g., @RequestMapping, @Controller -->
+    <mvc:annotation-driven />
+
+    <!-- enable auto scanning feature-->
+    <context:component-scan base-package="htwb.ai.ALIS" />
+
+    <bean id="userDAO" class="htwb.ai.ALIS.repository.UserDAOImpl">
+    </bean>
+    <bean id="authController" class="htwb.ai.ALIS.controller.AuthController">
+        <constructor-arg type="htwb.ai.ALIS.repository.UserDAO" index="0" name="userDAO" ref="userDAO"/>
+    </bean>
+
+    <bean id="jsonMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+
+    <!--    For negotiating xml/json output-->
+    <bean id="contentNegotiationManager"
+          class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="true" />
+        <property name="favorParameter" value="false"/>
+        <property name="parameterName" value="mediaType"/>
+        <property name="ignoreAcceptHeader" value="false" />
+        <property name="defaultContentType" value="application/json" />
+        <property name="useJaf" value="false" />
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json" />
+                <entry key="xml" value="application/xml" />
+            </map>
+        </property>
+    </bean>
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
+</beans>
