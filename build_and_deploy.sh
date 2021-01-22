@@ -2,4 +2,4 @@
 
 mvn clean package
 docker build . -t songsws
-docker run songsws -d
+docker run -d songsws
