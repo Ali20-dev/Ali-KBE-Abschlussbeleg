@@ -1,5 +1,18 @@
 # ALIS
 
+## Anleitung für das bauen vom Dockerfile + deployment auf der derzeitigen Maschine
+
+Voraussetzungen:
+- docker, maven installiert
+- Repo gecloned, git checkout songsWSb (damit der derzeitige Stand drauf ist!)
+
+### Schritte
+```
+cd ALIS-KBE
+eventuell: (sudo) chmod +x build_and_deploy.sh
+./build_and_deploy.sh
+```
+
 ## TODO
 1. Ersetzen Sie die Überschrift mit `TEAMNAME`
 2. Geben Sie Ihre Teammitglieder in die Tabelle ein

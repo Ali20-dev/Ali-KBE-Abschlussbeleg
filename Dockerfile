@@ -1,6 +1,5 @@
 FROM openjdk:11
-COPY ./songsWS/target/songsWS*.jar ~/
-RUN chmod a+rwx ~/songsWS*.jar
+COPY ./songsWS/target/songsWS-ALIS.jar ~/
 WORKDIR ~/
 EXPOSE 8080
-CMD ["java", "-jar", "songsWS*.jar"]
+CMD ["java", "-jar", "songsWS-ALIS.jar"]
