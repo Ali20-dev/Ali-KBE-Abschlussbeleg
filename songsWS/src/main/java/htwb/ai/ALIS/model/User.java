@@ -4,10 +4,7 @@ package htwb.ai.ALIS.model;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -38,11 +35,16 @@ public class User {
     @Length(max = 50)
     private String lastName;
 
-    public User(@NotNull @Min(3) @Max(50) String userId, @NotNull @Min(3) @Max(50) String password, @NotNull @Min(3) @Max(50) String firstName, @NotNull @Min(3) @Max(50) String lastName) {
+    @Column
+    @Length(max = 20)
+    private String accessToken;
+
+    public User(@NotNull @Min(3) @Max(50) String userId, @NotNull @Min(3) @Max(50) String password, @NotNull @Min(3) @Max(50) String firstName, @NotNull @Min(3) @Max(50) String lastName, @Length String accessToken) {
         this.userId = userId;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.accessToken = accessToken;
     }
 
     public User() {
@@ -79,5 +81,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }
