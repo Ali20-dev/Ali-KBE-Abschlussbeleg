@@ -11,7 +11,6 @@
     <groupId>htwb.ai.ALIS</groupId>
     <artifactId>songsWS</artifactId>
     <name>A Songs Web Service</name>
-    <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
