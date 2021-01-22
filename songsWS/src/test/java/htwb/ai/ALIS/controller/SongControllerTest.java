@@ -1,6 +1,7 @@
 package htwb.ai.ALIS.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import htwb.ai.ALIS.controller.SongController;
 import htwb.ai.ALIS.model.Song;
 import htwb.ai.ALIS.model.SongBuilder;
 import htwb.ai.ALIS.service.SongService;
@@ -26,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(SongController.class)
-class SongControllerTest {
+public class SongControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

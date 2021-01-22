@@ -3,6 +3,7 @@ package htwb.ai.ALIS.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import htwb.ai.ALIS.controller.PlaylistController;
 import htwb.ai.ALIS.model.*;
 import htwb.ai.ALIS.service.PlaylistService;
 import htwb.ai.ALIS.service.SongService;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-class PlaylistControllerTest {
+public class PlaylistControllerTest {
 
     MockMvc mockMvc;
 

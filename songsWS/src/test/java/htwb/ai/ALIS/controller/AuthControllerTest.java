@@ -1,6 +1,7 @@
 package htwb.ai.ALIS.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import htwb.ai.ALIS.controller.AuthController;
 import htwb.ai.ALIS.model.User;
 import htwb.ai.ALIS.model.UserBuilder;
 import htwb.ai.ALIS.service.UserService;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AuthController.class)
-class AuthControllerTest {
+public class AuthControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
