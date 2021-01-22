@@ -2,4 +2,4 @@
 
 mvn clean package
 docker build . -t songsws
-docker run -d songsws
+docker run -p 8080:8080 -d songsws
