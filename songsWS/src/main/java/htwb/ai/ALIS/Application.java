@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-class Application {
+public class Application {
     public static void main(String[] args) {
         System.setProperty("server.servlet.context-path", "/songsWS-ALIS");
         SpringApplication.run(Application.class, args);
