@@ -135,4 +135,29 @@ public class PlaylistController {
         }
     }
 
+    @PutMapping(value = "/songsLists", consumes = {"application/json"})
+    public ResponseEntity<?> putPlaylist(@RequestHeader(value = "Authorization", required = false) String token, @RequestBody @Valid Playlist playlist, @PathVariable int id) {
+        try {
+            if (noValidToken(token)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            Optional<User> accessingUser = userService.getUserForToken(token);
+            if (accessingUser.isEmpty()) {
+                return ResponseEntity.badRequest().build();
+            }
+            Optional<Playlist> loadedPlaylist = playlistService.getPlayListById(id);
+            if (loadedPlaylist.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            } else if (accessingUser.get().getUserId().equals(loadedPlaylist.get().getOwnerId().getUserId())) {
+                playlistService.removePlaylist(id);
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+
+    }
 }

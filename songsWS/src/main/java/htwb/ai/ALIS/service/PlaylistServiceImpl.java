@@ -48,4 +48,9 @@ public class PlaylistServiceImpl implements PlaylistService {
             return false;
         }
     }
+
+    @Override
+    public boolean putPlaylist(int id) {
+        return false;
+    }
 }

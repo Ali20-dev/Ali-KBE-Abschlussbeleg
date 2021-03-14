@@ -41,4 +41,6 @@ public interface PlaylistService {
      * @return true if worked, else false
      */
     boolean removePlaylist(int id);
+
+    boolean putPlaylist(int id);
 }
